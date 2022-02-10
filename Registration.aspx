@@ -59,18 +59,26 @@
             <br />
             Last Name :&nbsp;
             <asp:TextBox ID="tb_lastname" runat="server" Width="360px"></asp:TextBox>
+            &nbsp;&nbsp;
+            <asp:RequiredFieldValidator ID="RequiredFieldValidator9" runat="server" ControlToValidate="tb_lastname" ErrorMessage="Cannot be empty" ForeColor="Red"></asp:RequiredFieldValidator>
             <br />
             <br />
             Credit Card No. :&nbsp;
             <asp:TextBox ID="tb_creditnum" runat="server" Width="353px"></asp:TextBox>
+            &nbsp;
+            <asp:RequiredFieldValidator ID="RequiredFieldValidator10" runat="server" ControlToValidate="tb_creditnum" ErrorMessage="Cannot be empty" ForeColor="Red"></asp:RequiredFieldValidator>
             <br />
             <br />
             Credit Card Date:
             <asp:TextBox ID="tb_creditdate" runat="server" Width="327px"></asp:TextBox>
+            &nbsp;&nbsp;&nbsp;&nbsp;
+            <asp:RequiredFieldValidator ID="RequiredFieldValidator11" runat="server" ControlToValidate="tb_creditdate" ErrorMessage="Cannot be empty" ForeColor="Red"></asp:RequiredFieldValidator>
             <br />
             <br />
             CVV :&nbsp;
             <asp:TextBox ID="tb_creditcvv" runat="server" Width="327px"></asp:TextBox>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            <asp:RequiredFieldValidator ID="RequiredFieldValidator12" runat="server" ControlToValidate="tb_creditcvv" ErrorMessage="Cannot be empty" ForeColor="Red"></asp:RequiredFieldValidator>
             <br />
             <br />
             Email Adresss :&nbsp;
@@ -81,13 +89,22 @@
             <br />
             Date of birth :
             <asp:TextBox ID="tb_dob" runat="server" Width="327px" type="date"></asp:TextBox>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            <asp:RequiredFieldValidator ID="RequiredFieldValidator13" runat="server" ControlToValidate="tb_dob" ErrorMessage="Cannot be empty" ForeColor="Red"></asp:RequiredFieldValidator>
             <br />
             <br />
-            Photo : 
-            <asp:TextBox ID="tb_photo" runat="server" Width="327px"></asp:TextBox>
         </div>
+        <div id="row">
+                    <asp:Label ID="photoLabel" runat="server" Text="Photo"></asp:Label>
+                    <br />
+                    <asp:FileUpload ID="photoTB" runat="server" />
+                    <asp:Label ID="photoError" runat="server" Text=""></asp:Label>
+                    <br />
+                    <asp:RequiredFieldValidator ID="RequiredFieldValidator8" runat="server" ControlToValidate="photoTB" ErrorMessage="*Photo is empty" ForeColor="Red"></asp:RequiredFieldValidator>
+                    <br />
+                </div>
         <p>
-            Password&nbsp;:&nbsp;&nbsp;&nbsp; <asp:TextBox ID="tb_password" runat="server" Width="363px" onkeyup="javascript:validate()"></asp:TextBox>
+            Password&nbsp;:&nbsp;&nbsp;&nbsp; <asp:TextBox ID="tb_password" runat="server" Width="363px" type="password" onkeyup="javascript:validate()"></asp:TextBox>
 &nbsp;&nbsp;
             <asp:Label ID="lbl_suggest" runat="server" Text="Label"></asp:Label>
         </p>

@@ -11,7 +11,7 @@ using System.Text;
 using System.Data;
 using System.Data.SqlClient;
 using System.Reflection;
-
+using System.IO;
 
 namespace SITConnect
 {
@@ -22,6 +22,7 @@ namespace SITConnect
         System.Configuration.ConfigurationManager.ConnectionStrings["SITConnection"].ConnectionString;
         static string finalHash;
         static string salt;
+        string filename;
         byte[] Key;
         byte[] IV;
         protected void Page_Load(object sender, EventArgs e)
@@ -106,7 +107,32 @@ namespace SITConnect
 
         protected void btn_Submit_Click(object sender, EventArgs e)
         {
-            string pwd = tb_password.Text.ToString().Trim(); ;
+
+            //Photo vars
+            HttpPostedFile postedFile = photoTB.PostedFile;
+            filename = Path.GetFileName(postedFile.FileName);
+            string fileExtension = Path.GetExtension(filename);
+
+            bool filetype;
+
+            string pwd = tb_password.Text.ToString().Trim();
+
+            //validation for photo
+            if (fileExtension.ToLower() == ".jpg" || fileExtension.ToLower() == ".bmp" ||
+                fileExtension.ToLower() == ".gif" || fileExtension.ToLower() == ".png")
+            {
+                filetype = true;
+            }
+            else
+            {
+                photoError.Text = "Only images (.jpg, .png, .gif, .bmp) can be upload";
+                photoError.ForeColor = System.Drawing.Color.Red;
+
+                filetype = false;
+            }
+
+
+
 
             //Generate random "salt"
             RNGCryptoServiceProvider rng = new RNGCryptoServiceProvider();
@@ -125,7 +151,17 @@ namespace SITConnect
             Key = cipher.Key;
             IV = cipher.IV;
 
-            createAccount();
+            if (filetype)
+            {
+                createAccount();
+                Response.Redirect("Login.aspx", false);
+            }
+
+
+
+
+
+            
 
 
 
@@ -144,14 +180,14 @@ namespace SITConnect
                             using (SqlDataAdapter sda = new SqlDataAdapter())
                             {
                                 cmd.CommandType = CommandType.Text;
-                                cmd.Parameters.AddWithValue("@Fname", tb_firstname.Text.Trim());
-                                cmd.Parameters.AddWithValue("@Lname", tb_lastname.Text.Trim());
-                                cmd.Parameters.AddWithValue("@CreditNum", Convert.ToBase64String(encryptData(tb_creditnum.Text.Trim())));
-                                cmd.Parameters.AddWithValue("@CreditDate", Convert.ToBase64String(encryptData(tb_creditdate.Text.Trim())));
-                                cmd.Parameters.AddWithValue("@CreditCVV", Convert.ToBase64String(encryptData(tb_creditcvv.Text.Trim())));
-                                cmd.Parameters.AddWithValue("@Email", tb_email.Text.Trim());
+                                cmd.Parameters.AddWithValue("@Fname", HttpUtility.HtmlEncode(tb_firstname.Text.Trim()));
+                                cmd.Parameters.AddWithValue("@Lname", HttpUtility.HtmlEncode(tb_lastname.Text.Trim()));
+                                cmd.Parameters.AddWithValue("@CreditNum", HttpUtility.HtmlEncode(Convert.ToBase64String(encryptData(tb_creditnum.Text.Trim()))));
+                                cmd.Parameters.AddWithValue("@CreditDate", HttpUtility.HtmlEncode(Convert.ToBase64String(encryptData(tb_creditdate.Text.Trim()))));
+                                cmd.Parameters.AddWithValue("@CreditCVV", HttpUtility.HtmlEncode(Convert.ToBase64String(encryptData(tb_creditcvv.Text.Trim()))));
+                                cmd.Parameters.AddWithValue("@Email", HttpUtility.HtmlEncode(tb_email.Text.Trim()));
                                 cmd.Parameters.AddWithValue("@DoB", tb_dob.Text.Trim());
-                                cmd.Parameters.AddWithValue("@Photo", tb_photo.Text.Trim());
+                                cmd.Parameters.AddWithValue("@Photo", filename);
                                 //cmd.Parameters.AddWithValue("@Nric", encryptData(tb_nric.Text.Trim()));
                                 cmd.Parameters.AddWithValue("@PasswordHash", finalHash);
                                 cmd.Parameters.AddWithValue("@PasswordSalt", salt);

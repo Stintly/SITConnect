@@ -33,7 +33,11 @@ namespace SITConnect
 
         protected void Page_Load(object sender, EventArgs e)
         {
-           
+            if (!IsPostBack)
+            {
+                lblMessage.Visible = false;
+            }
+
         }
 
         protected void LoginMe(object sender, EventArgs e)
@@ -84,6 +88,9 @@ namespace SITConnect
                         else
                         {
                             lblMessage.Text = "Userid or password is not valid. Please try again.";
+                            lblMessage.ForeColor = System.Drawing.Color.Red;
+                            lblMessage.Visible = true;
+
                         }
                     }
                 }

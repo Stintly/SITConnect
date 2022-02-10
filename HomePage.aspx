@@ -41,8 +41,6 @@ body {
 <div class="topnav">
   <a class="active" href="HomePage.aspx">Home</a>
   <a href="ChangePassword.aspx">Change Password</a>
-  <a href="#contact">Contact</a>
-  <a href="#about">About</a>
 </div>
 
     <form id="form1" runat="server">

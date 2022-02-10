@@ -13,7 +13,7 @@
             Change Password<br />
             <br />
             New Password :&nbsp;
-            <asp:TextBox ID="tb_newpassword" runat="server"></asp:TextBox>
+            <asp:TextBox ID="tb_newpassword" runat="server" type="password"></asp:TextBox>
             <br />
             <br />
             <asp:Button ID="Changepasswordbtn" runat="server" Text="Submit" Width="115px" OnClick="passwordchange"/>

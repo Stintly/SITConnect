@@ -17,7 +17,7 @@
             <br />
             <br />
             Password :&nbsp;
-            <asp:TextBox ID="tb_pwd" runat="server"></asp:TextBox>
+            <asp:TextBox ID="tb_pwd" runat="server" type="password"></asp:TextBox>
             <br />
             <br />
             <asp:Button ID="btn_login" runat="server" Text="Login" OnClick ="LoginMe"/>
