@@ -67,6 +67,13 @@ namespace SITConnect
                             Session["LoggedIn"] = userid;
                             Response.Redirect("VerifyOTP.aspx", false);
 
+                            //Create a new GUID save into the session
+                            string guid = Guid.NewGuid().ToString();
+                            Session["AuthToken"] = guid;
+
+                            //now create a new cookie with this guid value
+                            Response.Cookies.Add(new HttpCookie("AuthToken", guid));
+
                             // Logging
                             action = "Successfully logged in";
                             //createLog();
@@ -78,12 +85,7 @@ namespace SITConnect
                             SendVCode(RandomNum);
 
 
-                            //Create a new GUID save into the session
-                            string guid = Guid.NewGuid().ToString();
-                            Session["AuthToken"] = guid;
-
-                            //now create a new cookie with this guid value
-                            Response.Cookies.Add(new HttpCookie("AuthToken", guid));
+                            
                         }
                         else
                         {
